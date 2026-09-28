@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accessibility verification kit · VAI</title>
+<meta name="description" content="One command gives an Opethon Accessibility and Inclusion entry an automated WCAG 2.2 AA result and a design-contract score, each with its denominator and the command that produced it.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23191814'/%3E%3Crect x='8' y='20' width='16' height='4' fill='%23FFC400'/%3E%3C/svg%3E">
+<style>
+  :root {
+    /* Light theme. Contrast measured: ink 16.5:1, soft 9.3:1, quiet 6.4:1,
+       accent ink 6.2:1 on paper; strong rule 3.7:1 for component edges. */
+    --paper: oklch(0.975 0.005 95);
+    --surface: oklch(0.995 0.002 95);
+    --ink: oklch(0.21 0.008 95);
+    --ink-soft: oklch(0.38 0.008 95);
+    --ink-quiet: oklch(0.47 0.008 95);
+    --rule: oklch(0.86 0.006 95);
+    --rule-strong: oklch(0.60 0.008 95);
+    --accent-fill: #ffc400;
+    --accent-ink: #845000;
+    --on-accent: #191814;
+    --focus: #845000;
+
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+
+    --step--1: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+    --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+    --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    --step-2: clamp(1.563rem, 1.2rem + 1.4vw, 2.25rem);
+    --step-3: clamp(2.25rem, 1.2rem + 4.2vw, 4.5rem);
+    --step-figure: clamp(3.5rem, 1.5rem + 6vw, 7rem);
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4.5rem;
+    --space-9: 7rem;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --measure: 66ch;
+    --dur-fast: 140ms;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Dark theme. ink 17.0:1, soft 11.3:1, quiet 7.9:1, accent ink 11.9:1. */
+      --paper: oklch(0.15 0.004 95);
+      --surface: oklch(0.19 0.005 95);
+      --ink: oklch(0.95 0.008 95);
+      --ink-soft: oklch(0.82 0.008 95);
+      --ink-quiet: oklch(0.72 0.008 95);
+      --rule: oklch(0.30 0.006 95);
+      --rule-strong: oklch(0.52 0.008 95);
+      --accent-ink: oklch(0.84 0.15 85);
+      --focus: oklch(0.84 0.15 85);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: 1.65;
+  }
+
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+
+  code, pre, .mono { font-family: var(--font-mono); font-size: 0.92em; }
+  code { overflow-wrap: anywhere; }
+
+  .skip {
+    position: absolute; left: var(--space-4); top: -100px;
+    background: var(--surface); color: var(--ink);
+    padding: var(--space-2) var(--space-4); border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-sm); z-index: 10;
+  }
+  .skip:focus { top: var(--space-4); }
+
+  .wrap { max-width: 74rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 3rem); }
+
+  /* Top bar */
+  .bar {
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-6);
+    padding-block: var(--space-4); border-bottom: 1px solid var(--rule);
+  }
+  .mark { font-weight: 800; letter-spacing: 0.04em; font-size: var(--step-0); }
+  .mark-sub { color: var(--ink-soft); font-size: var(--step--1); }
+  .bar nav { margin-left: auto; }
+  .bar nav ul { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); margin: 0; padding: 0; list-style: none; }
+  .bar nav a {
+    display: inline-flex; align-items: center; min-height: 2.75rem; padding-inline: var(--space-2);
+    font-size: var(--step--1); color: var(--ink-soft); text-decoration: none; border-radius: var(--radius-sm);
+  }
+  .bar nav a:hover { color: var(--ink); text-decoration: underline; }
+
+  /* Hero */
+  .hero {
+    display: grid; gap: var(--space-7);
+    padding-block: var(--space-8) var(--space-7);
+  }
+  @media (min-width: 60rem) {
+    .hero { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); align-items: end; }
+  }
+  .eyebrow { margin: 0 0 var(--space-4); color: var(--ink-soft); font-size: var(--step--1); }
+  h1 {
+    margin: 0; font-family: var(--font-display); font-weight: 400;
+    font-size: var(--step-3); line-height: 1.06; letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+  h1 .second { display: block; margin-top: var(--space-3); font-style: italic; color: var(--accent-ink); }
+  .lede { max-width: 38rem; margin: var(--space-6) 0 0; font-size: var(--step-1); line-height: 1.5; color: var(--ink-soft); }
+
+  .figure { margin: 0; }
+  .figure .marker { display: block; width: 3.5rem; height: 0.5rem; background: var(--accent-fill); margin-bottom: var(--space-4); }
+  .figure .big {
+    margin: 0; font-family: var(--font-mono); font-size: var(--step-figure); line-height: 0.95;
+    font-variant-numeric: tabular-nums; letter-spacing: -0.04em; font-weight: 500; white-space: nowrap;
+  }
+  .figure .big .over { color: var(--ink-quiet); }
+  .figure figcaption { margin-top: var(--space-3); max-width: 24rem; font-size: var(--step--1); color: var(--ink-soft); line-height: 1.5; }
+
+  .command {
+    margin-top: var(--space-6); padding: var(--space-4) var(--space-5);
+    background: var(--surface); border: 1px solid var(--rule-strong); border-radius: var(--radius-md);
+    max-width: 38rem;
+  }
+  .command h2 { margin: 0 0 var(--space-2); font-size: var(--step--1); font-weight: 600; font-family: var(--font-body); letter-spacing: 0; }
+  .command pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: var(--step-0); }
+  .command p { margin: var(--space-2) 0 0; font-size: var(--step--1); color: var(--ink-soft); }
+  .independence { margin: var(--space-5) 0 0; font-size: var(--step--1); color: var(--ink-quiet); }
+
+  /* Sections */
+  main section { padding-block: var(--space-8) 0; }
+  main section + section { border-top: 1px solid var(--rule); margin-top: var(--space-8); }
+  h2 {
+    margin: 0 0 var(--space-4); font-family: var(--font-display); font-weight: 400;
+    font-size: var(--step-2); line-height: 1.15; letter-spacing: -0.005em; text-wrap: balance;
+  }
+  h3 { margin: var(--space-7) 0 var(--space-3); font-size: var(--step-1); line-height: 1.3; font-weight: 600; }
+  .prose { max-width: var(--measure); }
+  .prose p { margin: 0 0 var(--space-4); }
+
+  /* Readout: measurement, result, receipts */
+  .readout { margin: var(--space-6) 0 0; border-top: 2px solid var(--ink); }
+  .readout .row {
+    display: grid; gap: var(--space-1) var(--space-5); padding-block: var(--space-4);
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (min-width: 48rem) {
+    .readout .row { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 12rem; align-items: baseline; }
+    .readout .cites { justify-content: flex-end; }
+  }
+  .readout + .prose, .steps + .prose, ul.flags + .prose { margin-top: var(--space-5); }
+  .readout dt { color: var(--ink-soft); }
+  .readout dd { margin: 0; }
+  .readout .value { font-family: var(--font-mono); font-size: var(--step-1); font-variant-numeric: tabular-nums; }
+  .readout .value small { font-family: var(--font-body); font-size: var(--step--1); color: var(--ink-soft); }
+  .readout .cites { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+  .null {
+    display: inline-block; padding: 0 var(--space-2); border: 1px dashed var(--rule-strong);
+    border-radius: var(--radius-sm); font-family: var(--font-mono); color: var(--ink);
+  }
+
+  a.rcpt {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 2.25rem; min-height: 1.75rem; padding-inline: var(--space-2);
+    font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 600; line-height: 1;
+    color: var(--ink-soft); text-decoration: none;
+    border: 1px solid var(--rule-strong); border-radius: var(--radius-sm);
+    vertical-align: middle;
+  }
+  a.rcpt:hover { color: var(--ink); border-color: var(--ink); }
+
+  .callout {
+    margin-top: var(--space-6); padding: var(--space-5); max-width: calc(var(--measure) + 3rem);
+    border-left: 4px solid var(--accent-fill); background: var(--surface);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+  .callout h3 { margin-top: 0; }
+  .callout p { margin: 0 0 var(--space-3); max-width: var(--measure); }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* Engine flags: one card per flag, reflowing at any width */
+  ul.flags { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: var(--space-4); }
+  @media (min-width: 64rem) { ul.flags { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  ul.flags li { padding: var(--space-5); border: 1px solid var(--rule-strong); border-radius: var(--radius-md); background: var(--surface); }
+  ul.flags h4 { margin: 0 0 var(--space-3); font-family: var(--font-mono); font-size: var(--step-0); font-weight: 600; }
+  ul.flags dl { margin: 0; font-size: var(--step--1); line-height: 1.55; }
+  ul.flags dt { color: var(--ink-soft); font-weight: 600; margin-top: var(--space-3); }
+  ul.flags dt:first-child { margin-top: 0; }
+  ul.flags dd { margin: var(--space-1) 0 0; }
+  ul.flags dd.outcome { font-weight: 600; }
+
+  /* Receipts: runs and figures as reflowing lists */
+  ol.runs { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: var(--space-4); }
+  ol.runs li { padding: var(--space-4) var(--space-5); border: 1px solid var(--rule); border-radius: var(--radius-md); }
+  ol.runs h4 { margin: 0 0 var(--space-2); font-size: var(--step-0); }
+  ol.runs dl { display: grid; gap: var(--space-1) var(--space-4); margin: 0; font-size: var(--step--1); }
+  @media (min-width: 48rem) { ol.runs dl { grid-template-columns: 8rem minmax(0, 1fr); } }
+  ol.runs dt { color: var(--ink-soft); }
+  ol.runs dd { margin: 0; overflow-wrap: anywhere; }
+  ol.runs dd a { display: inline-block; padding-block: 0.2rem; }
+
+  dl.receipts { margin: var(--space-4) 0 0; border-top: 2px solid var(--ink); font-size: var(--step--1); }
+  dl.receipts .receipt {
+    display: grid; gap: var(--space-1) var(--space-4); padding: var(--space-3) var(--space-2);
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (min-width: 56rem) {
+    dl.receipts .receipt { grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.2fr) minmax(0, 1.6fr); align-items: baseline; }
+  }
+  dl.receipts .rid { display: inline-block; min-width: 3.25rem; font-family: var(--font-mono); font-weight: 600; }
+  dl.receipts dd { margin: 0; overflow-wrap: anywhere; }
+  dl.receipts .val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  dl.receipts .src { color: var(--ink-soft); }
+  .receipt:target, ol.runs li:target { background: var(--surface); outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* Rules and limits */
+  ol.rules { max-width: var(--measure); padding-left: 1.4em; margin: var(--space-5) 0 0; }
+  ol.rules li { margin-bottom: var(--space-4); padding-left: var(--space-2); }
+  ol.rules li::marker { font-family: var(--font-mono); color: var(--accent-ink); font-weight: 600; }
+  ul.limits { display: grid; gap: var(--space-2) var(--space-6); margin: var(--space-5) 0 0; padding-left: 1.2em; max-width: 60rem; }
+  @media (min-width: 48rem) { ul.limits { grid-template-columns: 1fr 1fr; } }
+
+  .steps { display: grid; gap: var(--space-5); margin-top: var(--space-5); }
+  @media (min-width: 56rem) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .step { padding: var(--space-5); border: 1px solid var(--rule-strong); border-radius: var(--radius-md); background: var(--surface); }
+  .step h3 { margin: 0 0 var(--space-2); font-size: var(--step-0); }
+  .step p { margin: 0 0 var(--space-3); font-size: var(--step--1); color: var(--ink-soft); }
+  .step pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: var(--step--1); color: var(--ink); }
+
+  .hash { display: block; margin-top: var(--space-2); font-family: var(--font-mono); overflow-wrap: anywhere; font-size: var(--step--1); }
+
+  footer { margin-top: var(--space-9); padding-block: var(--space-6) var(--space-7); border-top: 1px solid var(--rule); font-size: var(--step--1); color: var(--ink-soft); }
+  footer p { max-width: var(--measure); margin: 0 0 var(--space-2); }
+
+  /* Motion is feedback only, and only for people who have not asked for less. */
+  @media (prefers-reduced-motion: no-preference) {
+    a, a.rcpt, .bar nav a {
+      transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+                  text-decoration-thickness var(--dur-fast) var(--ease-out);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .figure .marker { forced-color-adjust: none; background: Highlight; }
+    .callout { border-left-color: Highlight; }
+    a.rcpt, .null, .command, .step { border-color: CanvasText; }
+  }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    .skip, .bar nav { display: none; }
+    main section + section { break-before: auto; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="wrap">
+  <div class="bar">
+    <span class="mark">VAI</span>
+    <span class="mark-sub">Verification kit</span>
+    <nav aria-label="On this page">
+      <ul>
+        <li><a href="#example">Worked example</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#run">Run it</a></li>
+        <li><a href="#check">Check us</a></li>
+        <li><a href="#receipts">Receipts</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Opethon, Accessibility &amp; Inclusion track</p>
+      <h1>Most accessibility work ships without a number. <span class="second">A number beats a claim.</span></h1>
+      <p class="lede">One command gives every entry the same automated WCAG 2.2 AA check and the same design-contract score. Each figure carries its denominator and the command that produced it. When the kit cannot stand behind a number, it prints <code>null</code> and names the reason.</p>
+      <div class="command">
+        <h2 id="cmd">Run it on your entry</h2>
+        <pre><code>./run-verification.sh https://your-entry.example</code></pre>
+        <p>On Windows, <code>.\run-verification.ps1 https://your-entry.example</code>. Needs Node 22 or newer and Chrome, Edge, Chromium or Brave. Nothing to install.</p>
+      </div>
+      <p class="independence">Independent of Opethon's organizers. Built by VAI and offered to the track.</p>
+    </div>
+    <figure class="figure" aria-labelledby="headline-caption">
+      <span class="marker" aria-hidden="true"></span>
+      <p class="big"><data value="0" data-receipt="R1">0</data><span class="over"> / </span><data value="21" data-receipt="R2">21</data></p>
+      <figcaption id="headline-caption">opethon.com at 1280 px: automated WCAG 2.2 AA violations over the 21 rules that found something to test.
+        <a class="rcpt" href="#r1" aria-label="Receipt R1">R1</a> <a class="rcpt" href="#r2" aria-label="Receipt R2">R2</a></figcaption>
+    </figure>
+  </div>
+
+  <section id="example" aria-labelledby="example-h">
+    <h2 id="example-h">Worked example: opethon.com</h2>
+    <div class="prose">
+      <p>The track's own site went first. It passes, which makes it the right first subject: the example shows what a clean result looks like when every figure can be traced to a run.</p>
+    </div>
+
+    <dl class="readout">
+      <div class="row">
+        <dt>Automated WCAG 2.2 AA rules at 1280 px</dt>
+        <dd class="value"><data value="0" data-receipt="R1">0</data> / <data value="21" data-receipt="R2">21</data> <small>violations / applicable rules</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r1" aria-label="Receipt R1">R1</a><a class="rcpt" href="#r2" aria-label="Receipt R2">R2</a></dd>
+      </div>
+      <div class="row">
+        <dt>The same rules at 320 px, the width WCAG reflow is written for</dt>
+        <dd class="value"><data value="0" data-receipt="R3">0</data> / <data value="21" data-receipt="R4">21</data> <small>violations / applicable rules</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r3" aria-label="Receipt R3">R3</a><a class="rcpt" href="#r4" aria-label="Receipt R4">R4</a></dd>
+      </div>
+      <div class="row">
+        <dt>Items the rules could not decide, left for a person</dt>
+        <dd class="value"><data value="0" data-receipt="R5">0</data> <small>and</small> <data value="0" data-receipt="R6">0</data> <small>at 1280 and 320 px</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r5" aria-label="Receipt R5">R5</a><a class="rcpt" href="#r6" aria-label="Receipt R6">R6</a></dd>
+      </div>
+      <div class="row">
+        <dt>Target size, WCAG 2.5.8, by axe-core's target-size rule</dt>
+        <dd class="value"><data value="pass" data-receipt="R7">pass</data> <small>and</small> <data value="pass" data-receipt="R8">pass</data> <small>at 1280 and 320 px</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r7" aria-label="Receipt R7">R7</a><a class="rcpt" href="#r8" aria-label="Receipt R8">R8</a></dd>
+      </div>
+      <div class="row">
+        <dt>Animations still running after the browser asks for reduced motion</dt>
+        <dd class="value"><data value="0" data-receipt="R9">0</data> <small>and</small> <data value="0" data-receipt="R10">0</data> <small>at 1280 and 320 px</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r9" aria-label="Receipt R9">R9</a><a class="rcpt" href="#r10" aria-label="Receipt R10">R10</a></dd>
+      </div>
+      <div class="row">
+        <dt>Design-contract engine score, as the engine reports it</dt>
+        <dd class="value"><data value="99.1" data-receipt="R11">99.1</data> (<data value="A" data-receipt="R12">A</data>) <small><data value="27" data-receipt="R13">27</data> of <data value="40" data-receipt="R14">40</data> checks scored</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r11" aria-label="Receipt R11">R11</a><a class="rcpt" href="#r12" aria-label="Receipt R12">R12</a><a class="rcpt" href="#r13" aria-label="Receipt R13">R13</a><a class="rcpt" href="#r14" aria-label="Receipt R14">R14</a></dd>
+      </div>
+      <div class="row">
+        <dt>Flags the contract engine raised, and what re-measurement made of them</dt>
+        <dd class="value"><data value="3" data-receipt="R15">3</data> <small>raised:</small> <data value="2" data-receipt="R16">2</data> <small>rejected,</small> <data value="1" data-receipt="R17">1</data> <small>stands as raised</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r15" aria-label="Receipt R15">R15</a><a class="rcpt" href="#r16" aria-label="Receipt R16">R16</a><a class="rcpt" href="#r17" aria-label="Receipt R17">R17</a></dd>
+      </div>
+      <div class="row">
+        <dt>Misfire rate</dt>
+        <dd class="value"><span class="null"><data value="null" data-receipt="R18">null</data></span> <small>a website has no input method of its own</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r18" aria-label="Receipt R18">R18</a></dd>
+      </div>
+    </dl>
+
+    <div class="callout">
+      <h3>The first attempt was refused, and the kit said so</h3>
+      <p>A fresh automated browser does not reach this page. The host answers it with a browser check, HTTP <data value="403" data-receipt="R19">403</data>. The kit read that response as text, never ran it, and printed <span class="null"><data value="null" data-receipt="R20">null</data></span> for both widths. <a class="rcpt" href="#r19" aria-label="Receipt R19">R19</a> <a class="rcpt" href="#r20" aria-label="Receipt R20">R20</a></p>
+      <p>The figures above come from the same kit running inside an ordinary browser session, which the host serves (<code>--attach</code>). Anyone can repeat them by hand with the console check further down.</p>
+    </div>
+
+    <h3>Engine flags, settled by measurement</h3>
+    <ul class="flags">
+      <li>
+        <h4>v24 touch targets</h4>
+        <dl>
+          <dt>The engine said</dt>
+          <dd>Targets under 44 px, labeled WCAG 2.5.8. That criterion is Level AA and its figure is 24 px; 44 px belongs to 2.5.5, Level AAA.</dd>
+          <dt>Measured in the page</dt>
+          <dd>axe-core's target-size rule, which applies 2.5.8 with its spacing and inline exceptions, passed at 1280 and 320 px.</dd>
+          <dt>Outcome</dt>
+          <dd class="outcome"><data value="rejected on re-measurement" data-receipt="R21">rejected on re-measurement</data> <a class="rcpt" href="#r21" aria-label="Receipt R21">R21</a></dd>
+        </dl>
+      </li>
+      <li>
+        <h4>v34 AI disclosure</h4>
+        <dl>
+          <dt>The engine said</dt>
+          <dd>The page mentions AI and carries no disclosure marker for a chatbot.</dd>
+          <dt>Measured in the page</dt>
+          <dd>No text entry and no embedded frame at either width, so the page has nowhere to hold a chat.</dd>
+          <dt>Outcome</dt>
+          <dd class="outcome"><data value="rejected: not applicable to this page" data-receipt="R22">rejected: not applicable to this page</data> <a class="rcpt" href="#r22" aria-label="Receipt R22">R22</a></dd>
+        </dl>
+      </li>
+      <li>
+        <h4>v14 typography rules</h4>
+        <dl>
+          <dt>The engine said</dt>
+          <dd>Three optional typography declarations are missing.</dd>
+          <dt>Measured in the page</dt>
+          <dd>A contract preference outside WCAG. The kit has no measurement for it.</dd>
+          <dt>Outcome</dt>
+          <dd class="outcome"><data value="not re-measured: reported as the engine raised it" data-receipt="R23">not re-measured: reported as the engine raised it</data> <a class="rcpt" href="#r23" aria-label="Receipt R23">R23</a></dd>
+        </dl>
+      </li>
+    </ul>
+    <div class="prose">
+      <p>The engine's passes on reduced motion, input size and reading measure were measured as well, and all three agree with the page.</p>
+    </div>
+  </section>
+
+  <section id="rules" aria-labelledby="rules-h">
+    <h2 id="rules-h">Five rules every number follows</h2>
+    <ol class="rules">
+      <li><strong>The denominator travels with the number.</strong> Every figure says whether its denominator was observed in the run or declared by someone. The kit reports observed figures only.</li>
+      <li><strong>A number the kit cannot stand behind prints as <code>null</code>.</strong> The reason prints beside it: a refused page, an HTTP error, a page that never settled, an engine file that fails its hash.</li>
+      <li><strong>Flags and findings stay apart.</strong> Engines raise flags. A flag becomes a finding only after re-measurement in the rendered page confirms it.</li>
+      <li><strong>What the rules cannot decide goes to a person.</strong> Items needing review are listed on their own and never counted as passes.</li>
+      <li><strong>Every report lists what it did not look at.</strong> The list below is printed at the end of every run.</li>
+    </ol>
+
+    <h3>What the kit cannot see</h3>
+    <div class="prose">
+      <p>Automated rules cover part of WCAG. W3C's own guidance is that no tool alone can determine whether a site meets accessibility standards. The kit tells an entrant which automated checks their page passes, with receipts, and shows a judge where testing with people has to take over.</p>
+    </div>
+    <ul class="limits">
+      <li>Whether people using assistive technology can finish the task the entry exists for</li>
+      <li>Whether alt text, headings, labels and error messages mean what they say</li>
+      <li>Anything behind a click: menus, dialogs, forms, signed-in states</li>
+      <li>Keyboard use across a whole task: focus order, traps, visible focus</li>
+      <li>What a screen reader announces</li>
+      <li>Cognitive load, plain language, caption quality</li>
+      <li>Pages other than the one scanned</li>
+      <li>Speed, which needs field data</li>
+    </ul>
+  </section>
+
+  <section id="misfire" aria-labelledby="misfire-h">
+    <h2 id="misfire-h">The misfire slot</h2>
+    <div class="prose">
+      <p>Entries that ship an input method, such as dwell clicking, switch scanning, gaze or EMG, get one more figure: the misfire rate, the activations a person did not intend per hour the input was armed. It comes from access-conformance, an open-source instrument, and it prints only after 15 minutes of observed exposure.</p>
+    </div>
+    <dl class="readout">
+      <div class="row">
+        <dt>The instrument's reference session, run for this page</dt>
+        <dd class="value"><span class="null"><data value="null" data-receipt="R24">null</data></span> <small>false activations per armed hour</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r24" aria-label="Receipt R24">R24</a></dd>
+      </div>
+      <div class="row">
+        <dt>Exposure in that session</dt>
+        <dd class="value"><data value="26880" data-receipt="R25">26.9 s</data> <small><data value="observed" data-receipt="R26">observed</data></small></dd>
+        <dd class="cites"><a class="rcpt" href="#r25" aria-label="Receipt R25">R25</a><a class="rcpt" href="#r26" aria-label="Receipt R26">R26</a></dd>
+      </div>
+      <div class="row">
+        <dt>Exposure floor before a rate prints</dt>
+        <dd class="value"><data value="900000" data-receipt="R27">15 min</data></dd>
+        <dd class="cites"><a class="rcpt" href="#r27" aria-label="Receipt R27">R27</a></dd>
+      </div>
+    </dl>
+    <div class="prose">
+      <p>That session is the instrument's own script, so it describes no device. It is here to show the rule working. No entrant's input method has been measured yet, and the slot stays empty until one is.</p>
+    </div>
+  </section>
+
+  <section id="run" aria-labelledby="run-h">
+    <h2 id="run-h">Run it on your entry</h2>
+    <div class="prose">
+      <p>The kit is one folder: a runner, the pinned rules engine, this page and its receipts. It needs Node 22 or newer and a Chromium-family browser. Each run prints a summary and writes <code>report.json</code> with every rule, every measurement and the reason for any <code>null</code>.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>A deployed entry</h3>
+        <p>Scans the page at two widths in a fresh headless browser.</p>
+        <pre><code>./run-verification.sh https://your-entry.example</code></pre>
+      </div>
+      <div class="step">
+        <h3>A local build</h3>
+        <p>Serves the folder on 127.0.0.1 for the length of the run. The contract engine takes domain names only, so its slot prints null here.</p>
+        <pre><code>./run-verification.sh ./dist/index.html</code></pre>
+      </div>
+      <div class="step">
+        <h3>A page behind a browser check</h3>
+        <p>Open the page yourself in a browser started with a DevTools port, then attach. The report records that a session was used.</p>
+        <pre><code>./run-verification.sh https://your-entry.example --attach 9222</code></pre>
+      </div>
+    </div>
+    <div class="prose">
+      <p>Exit codes: <code>0</code> no automated violations, <code>1</code> violations found, <code>2</code> a WCAG number was withheld and the report says why, <code>3</code> the run could not start. The method, every parameter and every known engine weakness are in <a href="METHOD.md">METHOD.md</a>; setup steps are in <a href="README.md">README.md</a>.</p>
+    </div>
+  </section>
+
+  <section id="check" aria-labelledby="check-h">
+    <h2 id="check-h">Check us instead of trusting us</h2>
+    <dl class="readout">
+      <div class="row">
+        <dt>The rules engine is axe-core 4.13.0 exactly as npm publishes it. The runner refuses to report if the file differs from this SHA-256.</dt>
+        <dd class="value"><code class="hash"><data value="c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1" data-receipt="R28">c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1</data></code></dd>
+        <dd class="cites"><a class="rcpt" href="#r28" aria-label="Receipt R28">R28</a></dd>
+      </div>
+      <div class="row">
+        <dt>This page, scanned by this kit at 1280 px</dt>
+        <dd class="value"><data value="0" data-receipt="R29">0</data> / <data value="21" data-receipt="R30">21</data> <small>violations / applicable rules</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r29" aria-label="Receipt R29">R29</a><a class="rcpt" href="#r30" aria-label="Receipt R30">R30</a></dd>
+      </div>
+      <div class="row">
+        <dt>This page at 320 px</dt>
+        <dd class="value"><data value="0" data-receipt="R31">0</data> / <data value="21" data-receipt="R32">21</data> <small>violations / applicable rules</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r31" aria-label="Receipt R31">R31</a><a class="rcpt" href="#r32" aria-label="Receipt R32">R32</a></dd>
+      </div>
+      <div class="row">
+        <dt>This page's design-contract score</dt>
+        <dd class="value"><span class="null"><data value="null" data-receipt="R33">null</data></span> <small>the engine takes domain names only, and this page was scanned from a local folder</small></dd>
+        <dd class="cites"><a class="rcpt" href="#r33" aria-label="Receipt R33">R33</a></dd>
+      </div>
+    </dl>
+    <div class="prose">
+      <p><strong>By hand, on any page.</strong> Open the page in your own browser, paste <a href="console-check.js">console-check.js</a> into the developer console and press Enter. It loads the same engine file from jsDelivr with an integrity hash, so the browser refuses any other file, and prints violations over applicable rules for the width you are viewing.</p>
+      <p><strong>The receipts.</strong> Every figure on this page has an entry in <a href="RECEIPTS.json">RECEIPTS.json</a> naming its run, its command and the time it ran. <code>node check-page.mjs</code> confirms each number here matches its receipt, and each receipt matches the raw output it cites.</p>
+    </div>
+  </section>
+
+  <section id="receipts" aria-labelledby="receipts-h">
+    <h2 id="receipts-h">Receipts</h2>
+    <div class="prose">
+      <p>Four runs produced every figure on this page. Each figure below names its run and the place in that run's raw output where its value sits, written as a JSON pointer.</p>
+    </div>
+    <h3>Runs</h3>
+    <ol class="runs">
+      <!-- RUNS:BEGIN -->
+      <li id="run-a">
+        <h4>Run A: opethon.com in a fresh headless browser</h4>
+        <dl>
+          <dt>Command</dt><dd><code>node verify.mjs https://opethon.com/ --out receipts</code></dd>
+          <dt>Ran at</dt><dd>2026-09-28T03:12:45-04:00</dd>
+          <dt>Raw output</dt><dd><a href="receipts/opethon.com-20260928-031245-fresh/report.json">receipts/opethon.com-20260928-031245-fresh/report.json</a></dd>
+        </dl>
+      </li>
+      <li id="run-b">
+        <h4>Run B: opethon.com inside an ordinary browser session</h4>
+        <dl>
+          <dt>Command</dt><dd><code>node verify.mjs https://opethon.com/ --attach 9222 --out receipts</code></dd>
+          <dt>Ran at</dt><dd>2026-09-28T03:12:52-04:00</dd>
+          <dt>Raw output</dt><dd><a href="receipts/opethon.com-20260928-031252-attached/report.json">receipts/opethon.com-20260928-031252-attached/report.json</a></dd>
+          <dt>Note</dt><dd>Attached to a browser the operator already had open; its cookies applied. A fresh browser is refused by the host (run A).</dd>
+        </dl>
+      </li>
+      <li id="run-c">
+        <h4>Run C: access-conformance reference session</h4>
+        <dl>
+          <dt>Command</dt><dd><code>npx --yes access-conformance@0.1.2 --json</code></dd>
+          <dt>Ran at</dt><dd>2026-09-28T03:13:03-04:00 (recorded by the shell when the run started; the instrument's output carries no timestamp)</dd>
+          <dt>Raw output</dt><dd><a href="receipts/access-conformance-reference.json">receipts/access-conformance-reference.json</a></dd>
+        </dl>
+      </li>
+      <li id="run-d">
+        <h4>Run D: this page, served from its own folder</h4>
+        <dl>
+          <dt>Command</dt><dd><code>node verify.mjs index.html --out receipts</code></dd>
+          <dt>Ran at</dt><dd>2026-09-28T03:20:03-04:00</dd>
+          <dt>Raw output</dt><dd><a href="receipts/self-scan-20260928-032003/report.json">receipts/self-scan-20260928-032003/report.json</a></dd>
+          <dt>Note</dt><dd>A scan cannot contain its own result: this run saw the page with the previous self-scan's entry in this list. Every figure it produced is unchanged.</dd>
+        </dl>
+      </li>
+      <!-- RUNS:END -->
+    </ol>
+    <h3>Figures</h3>
+    <dl class="receipts">
+      <!-- FIGURES:BEGIN -->
+      <div class="receipt" id="r1">
+        <dt><span class="rid">R1</span> <span class="what">opethon.com, automated WCAG 2.2 AA violations at 1280 px</span></dt>
+        <dd class="val"><data value="0" data-receipt="R1">0</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/wcag/viewports/0/violations</code></dd>
+      </div>
+      <div class="receipt" id="r2">
+        <dt><span class="rid">R2</span> <span class="what">opethon.com, applicable rules at 1280 px (the denominator for R1)</span></dt>
+        <dd class="val"><data value="21" data-receipt="R2">21</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/wcag/viewports/0/applicable_rules</code></dd>
+      </div>
+      <div class="receipt" id="r3">
+        <dt><span class="rid">R3</span> <span class="what">opethon.com, violations at 320 px</span></dt>
+        <dd class="val"><data value="0" data-receipt="R3">0</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/wcag/viewports/1/violations</code></dd>
+      </div>
+      <div class="receipt" id="r4">
+        <dt><span class="rid">R4</span> <span class="what">opethon.com, applicable rules at 320 px (the denominator for R3)</span></dt>
+        <dd class="val"><data value="21" data-receipt="R4">21</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/wcag/viewports/1/applicable_rules</code></dd>
+      </div>
+      <div class="receipt" id="r5">
+        <dt><span class="rid">R5</span> <span class="what">opethon.com, items left for a person at 1280 px</span></dt>
+        <dd class="val"><data value="0" data-receipt="R5">0</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/wcag/viewports/0/needs_review</code></dd>
+      </div>
+      <div class="receipt" id="r6">
+        <dt><span class="rid">R6</span> <span class="what">opethon.com, items left for a person at 320 px</span></dt>
+        <dd class="val"><data value="0" data-receipt="R6">0</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/wcag/viewports/1/needs_review</code></dd>
+      </div>
+      <div class="receipt" id="r7">
+        <dt><span class="rid">R7</span> <span class="what">opethon.com, axe-core target-size rule at 1280 px</span></dt>
+        <dd class="val"><data value="pass" data-receipt="R7">pass</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/cross_checks/0/evidence/0/axe_target_size</code></dd>
+      </div>
+      <div class="receipt" id="r8">
+        <dt><span class="rid">R8</span> <span class="what">opethon.com, axe-core target-size rule at 320 px</span></dt>
+        <dd class="val"><data value="pass" data-receipt="R8">pass</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/cross_checks/0/evidence/1/axe_target_size</code></dd>
+      </div>
+      <div class="receipt" id="r9">
+        <dt><span class="rid">R9</span> <span class="what">opethon.com, animations running with reduced motion requested, 1280 px</span></dt>
+        <dd class="val"><data value="0" data-receipt="R9">0</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/wcag/viewports/0/motion/reduced_motion_requested/running</code></dd>
+      </div>
+      <div class="receipt" id="r10">
+        <dt><span class="rid">R10</span> <span class="what">opethon.com, animations running with reduced motion requested, 320 px</span></dt>
+        <dd class="val"><data value="0" data-receipt="R10">0</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/wcag/viewports/1/motion/reduced_motion_requested/running</code></dd>
+      </div>
+      <div class="receipt" id="r11">
+        <dt><span class="rid">R11</span> <span class="what">opethon.com, design-contract engine score</span></dt>
+        <dd class="val"><data value="99.1" data-receipt="R11">99.1</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/score</code></dd>
+      </div>
+      <div class="receipt" id="r12">
+        <dt><span class="rid">R12</span> <span class="what">opethon.com, design-contract engine grade</span></dt>
+        <dd class="val"><data value="A" data-receipt="R12">A</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/grade</code></dd>
+      </div>
+      <div class="receipt" id="r13">
+        <dt><span class="rid">R13</span> <span class="what">opethon.com, contract checks the engine scored</span></dt>
+        <dd class="val"><data value="27" data-receipt="R13">27</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/checks_scored</code></dd>
+      </div>
+      <div class="receipt" id="r14">
+        <dt><span class="rid">R14</span> <span class="what">contract checks in the engine</span></dt>
+        <dd class="val"><data value="40" data-receipt="R14">40</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/checks_total</code></dd>
+      </div>
+      <div class="receipt" id="r15">
+        <dt><span class="rid">R15</span> <span class="what">opethon.com, flags the contract engine raised</span></dt>
+        <dd class="val"><data value="3" data-receipt="R15">3</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/flags_raised</code></dd>
+      </div>
+      <div class="receipt" id="r16">
+        <dt><span class="rid">R16</span> <span class="what">opethon.com, flags rejected on re-measurement</span></dt>
+        <dd class="val"><data value="2" data-receipt="R16">2</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/flag_outcomes/rejected</code></dd>
+      </div>
+      <div class="receipt" id="r17">
+        <dt><span class="rid">R17</span> <span class="what">opethon.com, flags the kit could not re-measure</span></dt>
+        <dd class="val"><data value="1" data-receipt="R17">1</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/flag_outcomes/not_re_measured</code></dd>
+      </div>
+      <div class="receipt" id="r18">
+        <dt><span class="rid">R18</span> <span class="what">opethon.com, misfire rate</span></dt>
+        <dd class="val"><data value="null" data-receipt="R18">null</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/misfire_rate/value</code></dd>
+      </div>
+      <div class="receipt" id="r19">
+        <dt><span class="rid">R19</span> <span class="what">opethon.com in a fresh browser, HTTP status of the page</span></dt>
+        <dd class="val"><data value="403" data-receipt="R19">403</data></dd>
+        <dd class="src">run <a href="#run-a">A</a>, <code>/wcag/viewports/0/http/status</code></dd>
+      </div>
+      <div class="receipt" id="r20">
+        <dt><span class="rid">R20</span> <span class="what">opethon.com in a fresh browser, violations at the worst width</span></dt>
+        <dd class="val"><data value="null" data-receipt="R20">null</data></dd>
+        <dd class="src">run <a href="#run-a">A</a>, <code>/wcag/headline/violations_at_worst_width</code></dd>
+      </div>
+      <div class="receipt" id="r21">
+        <dt><span class="rid">R21</span> <span class="what">flag v24 (touch targets), outcome</span></dt>
+        <dd class="val"><data value="rejected on re-measurement" data-receipt="R21">rejected on re-measurement</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/flags/1/disposition</code></dd>
+      </div>
+      <div class="receipt" id="r22">
+        <dt><span class="rid">R22</span> <span class="what">flag v34 (AI disclosure), outcome</span></dt>
+        <dd class="val"><data value="rejected: not applicable to this page" data-receipt="R22">rejected: not applicable to this page</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/flags/2/disposition</code></dd>
+      </div>
+      <div class="receipt" id="r23">
+        <dt><span class="rid">R23</span> <span class="what">flag v14 (typography rules), outcome</span></dt>
+        <dd class="val"><data value="not re-measured: reported as the engine raised it" data-receipt="R23">not re-measured: reported as the engine raised it</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/contract/flags/0/disposition</code></dd>
+      </div>
+      <div class="receipt" id="r24">
+        <dt><span class="rid">R24</span> <span class="what">reference session, false activations per armed hour</span></dt>
+        <dd class="val"><data value="null" data-receipt="R24">null</data></dd>
+        <dd class="src">run <a href="#run-c">C</a>, <code>/measurement/armed/falsePerHour</code></dd>
+      </div>
+      <div class="receipt" id="r25">
+        <dt><span class="rid">R25</span> <span class="what">reference session, exposure in milliseconds</span></dt>
+        <dd class="val"><data value="26880" data-receipt="R25">26.9 s</data></dd>
+        <dd class="src">run <a href="#run-c">C</a>, <code>/measurement/observedMs</code></dd>
+      </div>
+      <div class="receipt" id="r26">
+        <dt><span class="rid">R26</span> <span class="what">reference session, where the exposure figure came from</span></dt>
+        <dd class="val"><data value="observed" data-receipt="R26">observed</data></dd>
+        <dd class="src">run <a href="#run-c">C</a>, <code>/measurement/exposureSource</code></dd>
+      </div>
+      <div class="receipt" id="r27">
+        <dt><span class="rid">R27</span> <span class="what">exposure floor in milliseconds before a rate prints</span></dt>
+        <dd class="val"><data value="900000" data-receipt="R27">15 min</data></dd>
+        <dd class="src">run <a href="#run-c">C</a>, <code>/measurement/armed/minExposureMs</code></dd>
+      </div>
+      <div class="receipt" id="r28">
+        <dt><span class="rid">R28</span> <span class="what">SHA-256 of the rules engine file the runs used</span></dt>
+        <dd class="val"><data value="c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1" data-receipt="R28">c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1</data></dd>
+        <dd class="src">run <a href="#run-b">B</a>, <code>/engines/axe/sha256</code></dd>
+      </div>
+      <div class="receipt" id="r29">
+        <dt><span class="rid">R29</span> <span class="what">this page, violations at 1280 px</span></dt>
+        <dd class="val"><data value="0" data-receipt="R29">0</data></dd>
+        <dd class="src">run <a href="#run-d">D</a>, <code>/wcag/viewports/0/violations</code></dd>
+      </div>
+      <div class="receipt" id="r30">
+        <dt><span class="rid">R30</span> <span class="what">this page, applicable rules at 1280 px</span></dt>
+        <dd class="val"><data value="21" data-receipt="R30">21</data></dd>
+        <dd class="src">run <a href="#run-d">D</a>, <code>/wcag/viewports/0/applicable_rules</code></dd>
+      </div>
+      <div class="receipt" id="r31">
+        <dt><span class="rid">R31</span> <span class="what">this page, violations at 320 px</span></dt>
+        <dd class="val"><data value="0" data-receipt="R31">0</data></dd>
+        <dd class="src">run <a href="#run-d">D</a>, <code>/wcag/viewports/1/violations</code></dd>
+      </div>
+      <div class="receipt" id="r32">
+        <dt><span class="rid">R32</span> <span class="what">this page, applicable rules at 320 px</span></dt>
+        <dd class="val"><data value="21" data-receipt="R32">21</data></dd>
+        <dd class="src">run <a href="#run-d">D</a>, <code>/wcag/viewports/1/applicable_rules</code></dd>
+      </div>
+      <div class="receipt" id="r33">
+        <dt><span class="rid">R33</span> <span class="what">this page, design-contract engine score</span></dt>
+        <dd class="val"><data value="null" data-receipt="R33">null</data></dd>
+        <dd class="src">run <a href="#run-d">D</a>, <code>/contract/score</code></dd>
+      </div>
+      <!-- FIGURES:END -->
+    </dl>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Built by VAI. Rules engine: axe-core 4.13.0 by Deque Systems, MPL-2.0. Design-contract engine: designesy-score 1.0.4. Misfire instrument: access-conformance 0.1.2.</p>
+  <p>Kit and page dated 28 September 2026. Independent of Opethon's organizers.</p>
+</footer>
+</body>
+</html>

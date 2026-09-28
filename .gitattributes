@@ -1,0 +1,4 @@
+# The engine is pinned by SHA-256. Git must not rewrite its line endings.
+engine/axe.min.js -text
+# The POSIX wrapper has to keep LF endings to run.
+*.sh text eol=lf

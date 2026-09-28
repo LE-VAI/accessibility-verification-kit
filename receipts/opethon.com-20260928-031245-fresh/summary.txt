@@ -1,0 +1,28 @@
+Accessibility verification kit 1.0.0
+Target      https://opethon.com/  (HTTP 403)
+Run         2026-09-28T03:12:45-04:00
+Engine      axe-core 4.13.0  sha256 c24f097bd2f4...  exact
+
+WCAG 2.2 AA, automated rules
+  1280 px   null   the server refused this browser (HTTP 403). Its response was quoted and never run, and the kit does not retry
+            refusal page: "Checking your browser before accessing. Just a moment..."  Checking your browser before accessing. Just a moment... Checking your browser before accessing Plea
+  320 px    null   not attempted: the server refused the first request
+
+Design contract (designesy-score 1.0.4, scope universal)
+  engine score   99.1 (A)   27 of 40 checks scored   24 pass, 3 warn, 0 fail, 10 skipped, 3 not measured by the engine
+  flags raised   3
+    v14   WARN  Cadence typography rules present (font-synth  not re-measured: reported as the engine raised it
+    v24   WARN  Touch targets ≥ 44px (WCAG 2.5.8)             not re-measured: reported as the engine raised it
+    v34   WARN  AI disclosure for chatbots/agents (EU AI Act  not re-measured: reported as the engine raised it
+
+Misfire rate      null   a URL has no input method of its own; for entries that ship one, measure it with access-conformance (METHOD.md 1.4)
+
+Not measured by this kit:
+  - whether people using assistive technology can complete the task the entry exists for
+  - whether text alternatives, headings, labels and error messages mean what they say
+  - anything behind an interaction: menus, dialogs, forms, states after sign-in
+  - pages other than the one scanned
+  - keyboard use across a whole task: focus order, traps, visible focus
+  - what a screen reader announces
+  - cognitive load, plain language, captions quality
+  - speed (Core Web Vitals need field data)

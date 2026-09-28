@@ -1,0 +1,33 @@
+Accessibility verification kit 1.0.0
+Target      http://127.0.0.1:55432/index.html  (HTTP 200)
+            served from a local file for this run
+Run         2026-09-28T03:20:03-04:00
+Engine      axe-core 4.13.0  sha256 c24f097bd2f4...  exact
+
+WCAG 2.2 AA, automated rules
+  1280 px   0 violations / 21 applicable rules   needs review 0   exceptions on page 0
+  320 px    0 violations / 21 applicable rules   needs review 0   exceptions on page 0
+
+Re-measured in the rendered page
+  target-size rule (WCAG 2.5.8, AA)                  1280: pass   320: pass
+    boxes under 24 px, before spacing exception      1280: 0   320: 0
+    boxes under 44 px (AAA, advice only)             1280: 39   320: 36
+  text entry fields                                  1280: 0   320: 0
+  paragraphs over 75 characters per line             1280: 0   320: 0
+  sideways scroll (px)                               1280: 0   320: 0
+  animations running, as loaded                      1280: 0   320: 0
+  animations running, reduced motion requested       1280: 0   320: 0
+
+Design contract   null   the contract engine returned no score (exit 2: Error: Invalid URL "http://127.0.0.1:55432/index.html". Enter a valid domain like designesy.org or nike.com.)
+
+Misfire rate      null   a URL has no input method of its own; for entries that ship one, measure it with access-conformance (METHOD.md 1.4)
+
+Not measured by this kit:
+  - whether people using assistive technology can complete the task the entry exists for
+  - whether text alternatives, headings, labels and error messages mean what they say
+  - anything behind an interaction: menus, dialogs, forms, states after sign-in
+  - pages other than the one scanned
+  - keyboard use across a whole task: focus order, traps, visible focus
+  - what a screen reader announces
+  - cognitive load, plain language, captions quality
+  - speed (Core Web Vitals need field data)

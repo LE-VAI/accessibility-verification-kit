@@ -1,0 +1,295 @@
+{
+  "schema": "verification-kit-receipts/1",
+  "page": "index.html",
+  "about": "Every figure on index.html cites one entry in figures. Each entry names the run that produced it and the JSON pointer where its value sits in that run's raw output. node check-page.mjs confirms the page, this file and the raw outputs agree.",
+  "runner": {
+    "file": "verify.mjs",
+    "sha256_lf": "5e1db1c4a6dadc02d2bc08716d195f54a3e92886c4879259f2eafb625e238bb7"
+  },
+  "engine": {
+    "name": "axe-core",
+    "version": "4.13.0",
+    "file": "engine/axe.min.js",
+    "sha256": "c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1"
+  },
+  "runs": [
+    {
+      "id": "A",
+      "label": "opethon.com in a fresh headless browser",
+      "command": "node verify.mjs https://opethon.com/ --out receipts",
+      "ran_at": "2026-09-28T03:12:45-04:00",
+      "file": "receipts/opethon.com-20260928-031245-fresh/report.json"
+    },
+    {
+      "id": "B",
+      "label": "opethon.com inside an ordinary browser session",
+      "command": "node verify.mjs https://opethon.com/ --attach 9222 --out receipts",
+      "ran_at": "2026-09-28T03:12:52-04:00",
+      "file": "receipts/opethon.com-20260928-031252-attached/report.json",
+      "note": "Attached to a browser the operator already had open; its cookies applied. A fresh browser is refused by the host (run A)."
+    },
+    {
+      "id": "C",
+      "label": "access-conformance reference session",
+      "command": "npx --yes access-conformance@0.1.2 --json",
+      "ran_at": "2026-09-28T03:13:03-04:00",
+      "ran_at_evidence": "recorded by the shell when the run started; the instrument's output carries no timestamp",
+      "file": "receipts/access-conformance-reference.json"
+    },
+    {
+      "id": "D",
+      "label": "this page, served from its own folder",
+      "command": "node verify.mjs index.html --out receipts",
+      "ran_at": "2026-09-28T03:20:03-04:00",
+      "file": "receipts/self-scan-20260928-032003/report.json",
+      "note": "A scan cannot contain its own result: this run saw the page with the previous self-scan's entry in this list. Every figure it produced is unchanged."
+    }
+  ],
+  "figures": [
+    {
+      "id": "R1",
+      "figure": "opethon.com, automated WCAG 2.2 AA violations at 1280 px",
+      "value": 0,
+      "run": "B",
+      "pointer": "/wcag/viewports/0/violations",
+      "provenance": "observed"
+    },
+    {
+      "id": "R2",
+      "figure": "opethon.com, applicable rules at 1280 px (the denominator for R1)",
+      "value": 21,
+      "run": "B",
+      "pointer": "/wcag/viewports/0/applicable_rules",
+      "provenance": "observed"
+    },
+    {
+      "id": "R3",
+      "figure": "opethon.com, violations at 320 px",
+      "value": 0,
+      "run": "B",
+      "pointer": "/wcag/viewports/1/violations",
+      "provenance": "observed"
+    },
+    {
+      "id": "R4",
+      "figure": "opethon.com, applicable rules at 320 px (the denominator for R3)",
+      "value": 21,
+      "run": "B",
+      "pointer": "/wcag/viewports/1/applicable_rules",
+      "provenance": "observed"
+    },
+    {
+      "id": "R5",
+      "figure": "opethon.com, items left for a person at 1280 px",
+      "value": 0,
+      "run": "B",
+      "pointer": "/wcag/viewports/0/needs_review",
+      "provenance": "observed"
+    },
+    {
+      "id": "R6",
+      "figure": "opethon.com, items left for a person at 320 px",
+      "value": 0,
+      "run": "B",
+      "pointer": "/wcag/viewports/1/needs_review",
+      "provenance": "observed"
+    },
+    {
+      "id": "R7",
+      "figure": "opethon.com, axe-core target-size rule at 1280 px",
+      "value": "pass",
+      "run": "B",
+      "pointer": "/contract/cross_checks/0/evidence/0/axe_target_size"
+    },
+    {
+      "id": "R8",
+      "figure": "opethon.com, axe-core target-size rule at 320 px",
+      "value": "pass",
+      "run": "B",
+      "pointer": "/contract/cross_checks/0/evidence/1/axe_target_size"
+    },
+    {
+      "id": "R9",
+      "figure": "opethon.com, animations running with reduced motion requested, 1280 px",
+      "value": 0,
+      "run": "B",
+      "pointer": "/wcag/viewports/0/motion/reduced_motion_requested/running",
+      "provenance": "observed"
+    },
+    {
+      "id": "R10",
+      "figure": "opethon.com, animations running with reduced motion requested, 320 px",
+      "value": 0,
+      "run": "B",
+      "pointer": "/wcag/viewports/1/motion/reduced_motion_requested/running",
+      "provenance": "observed"
+    },
+    {
+      "id": "R11",
+      "figure": "opethon.com, design-contract engine score",
+      "value": 99.1,
+      "run": "B",
+      "pointer": "/contract/score"
+    },
+    {
+      "id": "R12",
+      "figure": "opethon.com, design-contract engine grade",
+      "value": "A",
+      "run": "B",
+      "pointer": "/contract/grade"
+    },
+    {
+      "id": "R13",
+      "figure": "opethon.com, contract checks the engine scored",
+      "value": 27,
+      "run": "B",
+      "pointer": "/contract/checks_scored"
+    },
+    {
+      "id": "R14",
+      "figure": "contract checks in the engine",
+      "value": 40,
+      "run": "B",
+      "pointer": "/contract/checks_total"
+    },
+    {
+      "id": "R15",
+      "figure": "opethon.com, flags the contract engine raised",
+      "value": 3,
+      "run": "B",
+      "pointer": "/contract/flags_raised"
+    },
+    {
+      "id": "R16",
+      "figure": "opethon.com, flags rejected on re-measurement",
+      "value": 2,
+      "run": "B",
+      "pointer": "/contract/flag_outcomes/rejected"
+    },
+    {
+      "id": "R17",
+      "figure": "opethon.com, flags the kit could not re-measure",
+      "value": 1,
+      "run": "B",
+      "pointer": "/contract/flag_outcomes/not_re_measured"
+    },
+    {
+      "id": "R18",
+      "figure": "opethon.com, misfire rate",
+      "value": null,
+      "run": "B",
+      "pointer": "/misfire_rate/value"
+    },
+    {
+      "id": "R19",
+      "figure": "opethon.com in a fresh browser, HTTP status of the page",
+      "value": 403,
+      "run": "A",
+      "pointer": "/wcag/viewports/0/http/status"
+    },
+    {
+      "id": "R20",
+      "figure": "opethon.com in a fresh browser, violations at the worst width",
+      "value": null,
+      "run": "A",
+      "pointer": "/wcag/headline/violations_at_worst_width"
+    },
+    {
+      "id": "R21",
+      "figure": "flag v24 (touch targets), outcome",
+      "value": "rejected on re-measurement",
+      "run": "B",
+      "pointer": "/contract/flags/1/disposition"
+    },
+    {
+      "id": "R22",
+      "figure": "flag v34 (AI disclosure), outcome",
+      "value": "rejected: not applicable to this page",
+      "run": "B",
+      "pointer": "/contract/flags/2/disposition"
+    },
+    {
+      "id": "R23",
+      "figure": "flag v14 (typography rules), outcome",
+      "value": "not re-measured: reported as the engine raised it",
+      "run": "B",
+      "pointer": "/contract/flags/0/disposition"
+    },
+    {
+      "id": "R24",
+      "figure": "reference session, false activations per armed hour",
+      "value": null,
+      "run": "C",
+      "pointer": "/measurement/armed/falsePerHour"
+    },
+    {
+      "id": "R25",
+      "figure": "reference session, exposure in milliseconds",
+      "value": 26880,
+      "run": "C",
+      "pointer": "/measurement/observedMs",
+      "display": "26.9 s"
+    },
+    {
+      "id": "R26",
+      "figure": "reference session, where the exposure figure came from",
+      "value": "observed",
+      "run": "C",
+      "pointer": "/measurement/exposureSource"
+    },
+    {
+      "id": "R27",
+      "figure": "exposure floor in milliseconds before a rate prints",
+      "value": 900000,
+      "run": "C",
+      "pointer": "/measurement/armed/minExposureMs",
+      "display": "15 min"
+    },
+    {
+      "id": "R28",
+      "figure": "SHA-256 of the rules engine file the runs used",
+      "value": "c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1",
+      "run": "B",
+      "pointer": "/engines/axe/sha256"
+    },
+    {
+      "id": "R29",
+      "figure": "this page, violations at 1280 px",
+      "value": 0,
+      "run": "D",
+      "pointer": "/wcag/viewports/0/violations",
+      "provenance": "observed"
+    },
+    {
+      "id": "R30",
+      "figure": "this page, applicable rules at 1280 px",
+      "value": 21,
+      "run": "D",
+      "pointer": "/wcag/viewports/0/applicable_rules",
+      "provenance": "observed"
+    },
+    {
+      "id": "R31",
+      "figure": "this page, violations at 320 px",
+      "value": 0,
+      "run": "D",
+      "pointer": "/wcag/viewports/1/violations",
+      "provenance": "observed"
+    },
+    {
+      "id": "R32",
+      "figure": "this page, applicable rules at 320 px",
+      "value": 21,
+      "run": "D",
+      "pointer": "/wcag/viewports/1/applicable_rules",
+      "provenance": "observed"
+    },
+    {
+      "id": "R33",
+      "figure": "this page, design-contract engine score",
+      "value": null,
+      "run": "D",
+      "pointer": "/contract/score"
+    }
+  ]
+}

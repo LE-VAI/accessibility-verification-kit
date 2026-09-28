@@ -1,0 +1,174 @@
+{
+  "kit": {
+    "name": "accessibility-verification-kit",
+    "version": "1.0.0",
+    "runner_sha256_lf": "5e1db1c4a6dadc02d2bc08716d195f54a3e92886c4879259f2eafb625e238bb7"
+  },
+  "ran_at": "2026-09-28T03:12:45-04:00",
+  "command": "node verify.mjs https://opethon.com/ --out receipts",
+  "target": {
+    "requested": "https://opethon.com/",
+    "url": "https://opethon.com/",
+    "served_from_file": null,
+    "http_status": 403,
+    "final_url": null
+  },
+  "engines": {
+    "axe": {
+      "version": "4.13.0",
+      "sha256": "c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1",
+      "pinned_sha256": "c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1",
+      "match": "exact",
+      "tags": [
+        "wcag2a",
+        "wcag2aa",
+        "wcag21a",
+        "wcag21aa",
+        "wcag22aa"
+      ]
+    },
+    "contract": {
+      "package": "designesy-score",
+      "version": "1.0.4",
+      "scope": "universal"
+    }
+  },
+  "parameters": {
+    "viewports": [
+      {
+        "label": "desktop",
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "label": "reflow",
+        "width": 320,
+        "height": 640
+      }
+    ],
+    "readiness_budget_s": 6,
+    "settle_s": 3,
+    "browser": "headless, fresh profile, separate cookie jar per width, no extensions"
+  },
+  "environment": {
+    "node": "24.15.0",
+    "os": "win32 x64",
+    "browser": "Chrome/153.0.8010.54"
+  },
+  "wcag": {
+    "headline": {
+      "violations_at_worst_width": null,
+      "provenance": "observed",
+      "withheld_reason": "1280 px: the server refused this browser (HTTP 403). Its response was quoted and never run, and the kit does not retry; 320 px: not attempted: the server refused the first request"
+    },
+    "viewports": [
+      {
+        "label": "desktop",
+        "width": 1280,
+        "height": 900,
+        "status": "withheld",
+        "refused": true,
+        "http": {
+          "status": 403,
+          "url": "https://opethon.com/"
+        },
+        "refusal_page": {
+          "title": "Checking your browser before accessing. Just a moment...",
+          "text": "Checking your browser before accessing. Just a moment... Checking your browser before accessing Please wait for up to 5 seconds..."
+        },
+        "withheld_reason": "the server refused this browser (HTTP 403). Its response was quoted and never run, and the kit does not retry"
+      },
+      {
+        "label": "reflow",
+        "width": 320,
+        "height": 640,
+        "status": "withheld",
+        "withheld_reason": "not attempted: the server refused the first request"
+      }
+    ]
+  },
+  "contract": {
+    "status": "reported",
+    "command": "npx --yes designesy-score@1.0.4 https://opethon.com/ --scope universal --json",
+    "engine": "designesy-score 1.0.4",
+    "contract_version": "v0.4.0",
+    "scope": "universal",
+    "score": 99.1,
+    "grade": "A",
+    "checks_total": 40,
+    "checks_scored": 27,
+    "counts": {
+      "pass": 24,
+      "warn": 3,
+      "fail": 0,
+      "skip": 10,
+      "not_measured_by_engine": 3
+    },
+    "flags_raised": 3,
+    "flag_outcomes": {
+      "confirmed": 0,
+      "rejected": 0,
+      "not_settled": 0,
+      "not_re_measured": 3
+    },
+    "flags": [
+      {
+        "id": "v14",
+        "category": "cadence",
+        "status": "WARN",
+        "item": "Cadence typography rules present (font-synthesis, underline-position, skip-ink)",
+        "detail": "missing: font-synthesis: none, text-underline-position: from-font, text-decoration-skip-ink: auto",
+        "settled_by_measurement": false,
+        "disposition": "not re-measured: reported as the engine raised it"
+      },
+      {
+        "id": "v24",
+        "category": "accessibility",
+        "status": "WARN",
+        "item": "Touch targets ≥ 44px (WCAG 2.5.8)",
+        "detail": "5 min-height(s) found but none ≥44px: 3, 2, 3, 2, 1",
+        "settled_by_measurement": false,
+        "disposition": "not re-measured: reported as the engine raised it"
+      },
+      {
+        "id": "v34",
+        "category": "accessibility",
+        "status": "WARN",
+        "item": "AI disclosure for chatbots/agents (EU AI Act Art 50)",
+        "detail": "AI-related text found but no disclosure marker (aria-label, meta generator, or badge)",
+        "settled_by_measurement": false,
+        "disposition": "not re-measured: reported as the engine raised it"
+      }
+    ],
+    "engine_did_not_measure": [
+      {
+        "id": "v02",
+        "item": "Routes render without horizontal overflow at 375px, 720px, 860px, 1080px+"
+      },
+      {
+        "id": "v04",
+        "item": "Sound toggle flips aria-pressed and applies the audio preference"
+      },
+      {
+        "id": "v21",
+        "item": "Core Web Vitals plausible: LCP < 2.5s, INP < 200ms, CLS < 0.1"
+      }
+    ],
+    "cross_checks": []
+  },
+  "misfire_rate": {
+    "value": null,
+    "provenance": null,
+    "reason": "a URL has no input method of its own; for entries that ship one, measure it with access-conformance (METHOD.md 1.4)"
+  },
+  "not_measured": [
+    "whether people using assistive technology can complete the task the entry exists for",
+    "whether text alternatives, headings, labels and error messages mean what they say",
+    "anything behind an interaction: menus, dialogs, forms, states after sign-in",
+    "pages other than the one scanned",
+    "keyboard use across a whole task: focus order, traps, visible focus",
+    "what a screen reader announces",
+    "cognitive load, plain language, captions quality",
+    "speed (Core Web Vitals need field data)"
+  ]
+}

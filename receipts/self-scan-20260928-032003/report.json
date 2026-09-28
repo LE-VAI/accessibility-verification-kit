@@ -1,0 +1,891 @@
+{
+  "kit": {
+    "name": "accessibility-verification-kit",
+    "version": "1.0.0",
+    "runner_sha256_lf": "5e1db1c4a6dadc02d2bc08716d195f54a3e92886c4879259f2eafb625e238bb7"
+  },
+  "ran_at": "2026-09-28T03:20:03-04:00",
+  "command": "node verify.mjs index.html --out receipts",
+  "target": {
+    "requested": "index.html",
+    "url": "http://127.0.0.1:55432/index.html",
+    "served_from_file": "index.html",
+    "http_status": 200,
+    "final_url": "http://127.0.0.1:55432/index.html"
+  },
+  "engines": {
+    "axe": {
+      "version": "4.13.0",
+      "sha256": "c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1",
+      "pinned_sha256": "c24f097bd2f451d4f933e8bc7d8d539f8672a2ebcb5cc9f9f3eec8ca9470a0c1",
+      "match": "exact",
+      "tags": [
+        "wcag2a",
+        "wcag2aa",
+        "wcag21a",
+        "wcag21aa",
+        "wcag22aa"
+      ]
+    },
+    "contract": {
+      "package": "designesy-score",
+      "version": "1.0.4",
+      "scope": "universal"
+    }
+  },
+  "parameters": {
+    "viewports": [
+      {
+        "label": "desktop",
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "label": "reflow",
+        "width": 320,
+        "height": 640
+      }
+    ],
+    "readiness_budget_s": 6,
+    "settle_s": 3,
+    "browser": "headless, fresh profile, separate cookie jar per width, no extensions"
+  },
+  "environment": {
+    "node": "24.15.0",
+    "os": "win32 x64",
+    "browser": "Chrome/153.0.8010.54"
+  },
+  "wcag": {
+    "headline": {
+      "violations_at_worst_width": 0,
+      "per_width": [
+        {
+          "width": 1280,
+          "violations": 0,
+          "applicable_rules": 21,
+          "needs_review": 0
+        },
+        {
+          "width": 320,
+          "violations": 0,
+          "applicable_rules": 21,
+          "needs_review": 0
+        }
+      ],
+      "provenance": "observed"
+    },
+    "viewports": [
+      {
+        "label": "desktop",
+        "width": 1280,
+        "height": 900,
+        "load_event": true,
+        "readiness": {
+          "readyState": "complete",
+          "bodyElements": 661,
+          "settled": true
+        },
+        "http": {
+          "status": 200,
+          "url": "http://127.0.0.1:55432/index.html"
+        },
+        "status": "reported",
+        "final_url": "http://127.0.0.1:55432/index.html",
+        "violations": 0,
+        "applicable_rules": 21,
+        "passes": 21,
+        "needs_review": 0,
+        "inapplicable": 42,
+        "by_impact": {},
+        "violation_detail": [],
+        "needs_review_detail": [],
+        "rule_ids": {
+          "passes": [
+            "aria-allowed-attr",
+            "aria-conditional-attr",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "bypass",
+            "color-contrast",
+            "definition-list",
+            "dlitem",
+            "document-title",
+            "duplicate-id-aria",
+            "html-has-lang",
+            "html-lang-valid",
+            "link-in-text-block",
+            "link-name",
+            "list",
+            "listitem",
+            "meta-viewport",
+            "target-size"
+          ],
+          "violations": [],
+          "incomplete": [],
+          "inapplicable": [
+            "area-alt",
+            "aria-braille-equivalent",
+            "aria-command-name",
+            "aria-deprecated-role",
+            "aria-input-field-name",
+            "aria-meter-name",
+            "aria-progressbar-name",
+            "aria-required-attr",
+            "aria-required-children",
+            "aria-required-parent",
+            "aria-roles",
+            "aria-tab-name",
+            "aria-toggle-field-name",
+            "aria-tooltip-name",
+            "autocomplete-valid",
+            "avoid-inline-spacing",
+            "blink",
+            "button-name",
+            "form-field-multiple-labels",
+            "frame-focusable-content",
+            "frame-title-unique",
+            "frame-title",
+            "html-xml-lang-mismatch",
+            "image-alt",
+            "input-button-name",
+            "input-image-alt",
+            "label",
+            "marquee",
+            "meta-refresh",
+            "nested-interactive",
+            "object-alt",
+            "role-img-alt",
+            "scrollable-region-focusable",
+            "select-name",
+            "server-side-image-map",
+            "summary-name",
+            "svg-img-alt",
+            "td-headers-attr",
+            "th-has-data-cells",
+            "valid-lang",
+            "video-caption",
+            "no-autoplay-audio"
+          ]
+        },
+        "page_exceptions": 0,
+        "measured": {
+          "targets": 82,
+          "targets_below_24": [],
+          "targets_below_44": [
+            {
+              "tag": "a",
+              "text": "R1",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R2",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R1",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R2",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R3",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R4",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R5",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R6",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R7",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R8",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R9",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R10",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R11",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R12",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R13",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R14",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R15",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R16",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R17",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R18",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R19",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R20",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R21",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R22",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R23",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R24",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R25",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R26",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R27",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R28",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R29",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R30",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R31",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R32",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R33",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "receipts/opethon.com-20260928-031245-fre",
+              "w": 385,
+              "h": 31,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "receipts/opethon.com-20260928-031252-att",
+              "w": 411,
+              "h": 31,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "receipts/access-conformance-reference.js",
+              "w": 291,
+              "h": 31,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "receipts/self-scan-/report.json",
+              "w": 199,
+              "h": 31,
+              "inline_exempt": false
+            }
+          ],
+          "inline_exempt": 37,
+          "inputs": [],
+          "textEntry": 0,
+          "frames": 0,
+          "paragraphs": 22,
+          "proseOver75": [],
+          "viewport": {
+            "w": 1280,
+            "h": 900
+          },
+          "overflowX": 0,
+          "lang": "en",
+          "title": "Accessibility verification kit · VAI"
+        },
+        "motion": {
+          "as_loaded": {
+            "reduceMatches": false,
+            "running": 0,
+            "infinite": 0,
+            "scrollBehavior": "auto",
+            "sample": []
+          },
+          "reduced_motion_requested": {
+            "reduceMatches": true,
+            "running": 0,
+            "infinite": 0,
+            "scrollBehavior": "auto",
+            "sample": []
+          }
+        }
+      },
+      {
+        "label": "reflow",
+        "width": 320,
+        "height": 640,
+        "load_event": true,
+        "readiness": {
+          "readyState": "complete",
+          "bodyElements": 661,
+          "settled": true
+        },
+        "http": {
+          "status": 200,
+          "url": "http://127.0.0.1:55432/index.html"
+        },
+        "status": "reported",
+        "final_url": "http://127.0.0.1:55432/index.html",
+        "violations": 0,
+        "applicable_rules": 21,
+        "passes": 21,
+        "needs_review": 0,
+        "inapplicable": 42,
+        "by_impact": {},
+        "violation_detail": [],
+        "needs_review_detail": [],
+        "rule_ids": {
+          "passes": [
+            "aria-allowed-attr",
+            "aria-conditional-attr",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "bypass",
+            "color-contrast",
+            "definition-list",
+            "dlitem",
+            "document-title",
+            "duplicate-id-aria",
+            "html-has-lang",
+            "html-lang-valid",
+            "link-in-text-block",
+            "link-name",
+            "list",
+            "listitem",
+            "meta-viewport",
+            "target-size"
+          ],
+          "violations": [],
+          "incomplete": [],
+          "inapplicable": [
+            "area-alt",
+            "aria-braille-equivalent",
+            "aria-command-name",
+            "aria-deprecated-role",
+            "aria-input-field-name",
+            "aria-meter-name",
+            "aria-progressbar-name",
+            "aria-required-attr",
+            "aria-required-children",
+            "aria-required-parent",
+            "aria-roles",
+            "aria-tab-name",
+            "aria-toggle-field-name",
+            "aria-tooltip-name",
+            "autocomplete-valid",
+            "avoid-inline-spacing",
+            "blink",
+            "button-name",
+            "form-field-multiple-labels",
+            "frame-focusable-content",
+            "frame-title-unique",
+            "frame-title",
+            "html-xml-lang-mismatch",
+            "image-alt",
+            "input-button-name",
+            "input-image-alt",
+            "label",
+            "marquee",
+            "meta-refresh",
+            "nested-interactive",
+            "object-alt",
+            "role-img-alt",
+            "scrollable-region-focusable",
+            "select-name",
+            "server-side-image-map",
+            "summary-name",
+            "svg-img-alt",
+            "td-headers-attr",
+            "th-has-data-cells",
+            "valid-lang",
+            "video-caption",
+            "no-autoplay-audio"
+          ]
+        },
+        "page_exceptions": 0,
+        "measured": {
+          "targets": 82,
+          "targets_below_24": [],
+          "targets_below_44": [
+            {
+              "tag": "a",
+              "text": "R1",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R2",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R1",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R2",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R3",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R4",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R5",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R6",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R7",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R8",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R9",
+              "w": 36,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R10",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R11",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R12",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R13",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R14",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R15",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R16",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R17",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R18",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R19",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R20",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R21",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R22",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R23",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R24",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R25",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R26",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R27",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R28",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R29",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R30",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R31",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R32",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "R33",
+              "w": 42,
+              "h": 28,
+              "inline_exempt": false
+            },
+            {
+              "tag": "a",
+              "text": "receipts/self-scan-/report.json",
+              "w": 182,
+              "h": 29,
+              "inline_exempt": false
+            }
+          ],
+          "inline_exempt": 37,
+          "inputs": [],
+          "textEntry": 0,
+          "frames": 0,
+          "paragraphs": 22,
+          "proseOver75": [],
+          "viewport": {
+            "w": 320,
+            "h": 640
+          },
+          "overflowX": 0,
+          "lang": "en",
+          "title": "Accessibility verification kit · VAI"
+        },
+        "motion": {
+          "as_loaded": {
+            "reduceMatches": false,
+            "running": 0,
+            "infinite": 0,
+            "scrollBehavior": "auto",
+            "sample": []
+          },
+          "reduced_motion_requested": {
+            "reduceMatches": true,
+            "running": 0,
+            "infinite": 0,
+            "scrollBehavior": "auto",
+            "sample": []
+          }
+        }
+      }
+    ]
+  },
+  "contract": {
+    "status": "withheld",
+    "command": "npx --yes designesy-score@1.0.4 http://127.0.0.1:55432/index.html --scope universal --json",
+    "score": null,
+    "grade": null,
+    "withheld_reason": "the contract engine returned no score (exit 2: Error: Invalid URL \"http://127.0.0.1:55432/index.html\". Enter a valid domain like designesy.org or nike.com.)"
+  },
+  "misfire_rate": {
+    "value": null,
+    "provenance": null,
+    "reason": "a URL has no input method of its own; for entries that ship one, measure it with access-conformance (METHOD.md 1.4)"
+  },
+  "not_measured": [
+    "whether people using assistive technology can complete the task the entry exists for",
+    "whether text alternatives, headings, labels and error messages mean what they say",
+    "anything behind an interaction: menus, dialogs, forms, states after sign-in",
+    "pages other than the one scanned",
+    "keyboard use across a whole task: focus order, traps, visible focus",
+    "what a screen reader announces",
+    "cognitive load, plain language, captions quality",
+    "speed (Core Web Vitals need field data)"
+  ]
+}

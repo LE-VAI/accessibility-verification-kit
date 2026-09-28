@@ -1,0 +1,310 @@
+{
+  "schema": "access-conformance/1",
+  "sessionId": "cli",
+  "clock": {
+    "endMs": 26880
+  },
+  "timing": {
+    "engine": "ExternalEngine",
+    "words": 40,
+    "wordsPerMinute": 180,
+    "tokensEmitted": 40,
+    "lastToken": 39,
+    "tokenSequence": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39
+    ],
+    "msPerWord": 333
+  },
+  "input": {
+    "mode": "dwell",
+    "dwellMs": 600,
+    "activations": 4,
+    "targets": [
+      "w1",
+      "w2",
+      "w3",
+      "w5"
+    ]
+  },
+  "consent": {
+    "granted": [
+      "acquire_signal",
+      "process_locally"
+    ],
+    "epoch": 1,
+    "chainIntact": true,
+    "handlingStated": true,
+    "declaration": "Your raw signal: stays on this device. The tool declares it is not transmitted.\nDerived data: the tool declares nothing derived from your signal is sent anywhere.\nDeclared by access-conformance on 1970-01-01T00:00:00.000Z. This is the tool’s statement, not this library’s — the library has no way to check it and does not vouch for it."
+  },
+  "measurement": {
+    "armed": {
+      "sessionId": "cli",
+      "denominator": "armed",
+      "denominatorMs": 26880,
+      "denominatorHours": 0.007,
+      "rateWithheld": true,
+      "minExposureMs": 900000,
+      "falsePerHour": null,
+      "ambiguousPerHour": null,
+      "truePerHour": null,
+      "counts": {
+        "true": 2,
+        "ambiguous": 2,
+        "false": 0,
+        "total": 4
+      },
+      "witnessed": true,
+      "parameters": {
+        "intentionalHoldMs": 400,
+        "spuriousHoldMs": 250,
+        "undoWindowMs": 1500,
+        "minExposureMs": 900000
+      },
+      "activations": [
+        {
+          "tMs": 1264,
+          "heldMs": 1050,
+          "witness": "confirmed",
+          "outcome": "true",
+          "basis": "host confirmed the activation was used"
+        },
+        {
+          "tMs": 7264,
+          "heldMs": 770,
+          "witness": "undone",
+          "outcome": "ambiguous",
+          "basis": "reversed within 1500ms after a 770ms hold — either spurious or an abandoned attempt"
+        },
+        {
+          "tMs": 13840,
+          "heldMs": 1350,
+          "witness": "undone",
+          "outcome": "ambiguous",
+          "basis": "reversed within 1500ms after a 1350ms hold — either spurious or an abandoned attempt"
+        },
+        {
+          "tMs": 26880,
+          "heldMs": 1550,
+          "witness": "unknown",
+          "outcome": "true",
+          "basis": "held 1550ms (≥ 400ms) with no witness — credited as intentional by duration"
+        }
+      ]
+    },
+    "active": {
+      "sessionId": "cli",
+      "denominator": "active",
+      "denominatorMs": 13440,
+      "denominatorHours": 0.004,
+      "rateWithheld": true,
+      "minExposureMs": 900000,
+      "falsePerHour": null,
+      "ambiguousPerHour": null,
+      "truePerHour": null,
+      "counts": {
+        "true": 2,
+        "ambiguous": 2,
+        "false": 0,
+        "total": 4
+      },
+      "witnessed": true,
+      "parameters": {
+        "intentionalHoldMs": 400,
+        "spuriousHoldMs": 250,
+        "undoWindowMs": 1500,
+        "minExposureMs": 900000
+      },
+      "activations": [
+        {
+          "tMs": 1264,
+          "heldMs": 1050,
+          "witness": "confirmed",
+          "outcome": "true",
+          "basis": "host confirmed the activation was used"
+        },
+        {
+          "tMs": 7264,
+          "heldMs": 770,
+          "witness": "undone",
+          "outcome": "ambiguous",
+          "basis": "reversed within 1500ms after a 770ms hold — either spurious or an abandoned attempt"
+        },
+        {
+          "tMs": 13840,
+          "heldMs": 1350,
+          "witness": "undone",
+          "outcome": "ambiguous",
+          "basis": "reversed within 1500ms after a 1350ms hold — either spurious or an abandoned attempt"
+        },
+        {
+          "tMs": 26880,
+          "heldMs": 1550,
+          "witness": "unknown",
+          "outcome": "true",
+          "basis": "held 1550ms (≥ 400ms) with no witness — credited as intentional by duration"
+        }
+      ]
+    },
+    "exposureSource": "observed",
+    "observedMs": 26880
+  },
+  "steps": [
+    {
+      "target": "w1",
+      "gated": false,
+      "fired": true,
+      "outcome": {
+        "witness": "confirmed"
+      }
+    },
+    {
+      "target": "w2",
+      "gated": false,
+      "fired": true,
+      "outcome": {
+        "witness": "undone",
+        "undoAfterMs": 80
+      }
+    },
+    {
+      "target": "w3",
+      "gated": false,
+      "fired": true,
+      "outcome": {
+        "witness": "undone",
+        "undoAfterMs": 120
+      }
+    },
+    {
+      "target": "w4",
+      "gated": true,
+      "fired": false,
+      "outcome": null
+    },
+    {
+      "target": "w5",
+      "gated": false,
+      "fired": true,
+      "outcome": null
+    }
+  ],
+  "checks": [
+    {
+      "id": "measure.ratio-sound",
+      "name": "An absent denominator reports null, never zero",
+      "status": "pass",
+      "detail": "0.007h denominator, rate null/h",
+      "because": "a rate of 0 with no exposure reads as a perfect device; null reads as unmeasured"
+    },
+    {
+      "id": "measure.ambiguous-separate",
+      "name": "The ambiguous count is reported separately",
+      "status": "pass",
+      "detail": "2 ambiguous activation(s), reported separately from 0 false (counts are meaningful whether or not a rate follows). No per-hour figure: exposure was below the floor, so the RATE is withheld — the separation still holds.",
+      "because": "collapsing ambiguous into false is the bug the three-outcome split prevents — and it is reachable by one line in the classifier"
+    },
+    {
+      "id": "measure.denominators-distinct",
+      "name": "Armed and active denominators are both tracked",
+      "status": "pass",
+      "detail": "armed 0.007h, active 0.004h",
+      "because": "a single \"per hour\" hides a factor-of-two difference between watching with the switch armed and working at selection"
+    },
+    {
+      "id": "measure.witnessed-disclosed",
+      "name": "The report discloses whether any independent witness backed it",
+      "status": "pass",
+      "detail": "independent evidence (host confirmation or an undo) classified at least one activation",
+      "because": "presenting a parameterised guess as a measurement is the overclaim pattern this package refuses"
+    },
+    {
+      "id": "measure.parameters-echoed",
+      "name": "Classification parameters are reported alongside the rate",
+      "status": "pass",
+      "detail": "intentionalHoldMs=400, spuriousHoldMs=250, undoWindowMs=1500",
+      "because": "a reader must be able to see how much of the number came from the signal and how much from a choice"
+    },
+    {
+      "id": "measure.verdicts-justified",
+      "name": "Every classification carries its basis",
+      "status": "pass",
+      "detail": "4 activation(s); 0 without a stated reason",
+      "because": "an opaque verdict cannot be audited, and this number will be contested"
+    },
+    {
+      "id": "timing.one-clock",
+      "name": "The timing layer advanced on the session clock",
+      "status": "pass",
+      "detail": "40 token(s) emitted, last at 39, engine=ExternalEngine",
+      "because": "a timing layer that never advanced, or advanced on its own clock, is the two-timebase defect that made a test in this project fail 4 of 12 runs under load"
+    },
+    {
+      "id": "timing.monotonic",
+      "name": "Token emission is monotonic",
+      "status": "pass",
+      "detail": "40 emission(s) across 40 word(s), strictly increasing",
+      "because": "a non-monotonic read position means the highlight layer would visibly jump backwards"
+    },
+    {
+      "id": "input.gate-holds",
+      "name": "A withdrawn purpose prevents activation",
+      "status": "pass",
+      "detail": "1 gated step(s), 0 fired",
+      "because": "a consent layer that records a decision but does not prevent processing is documentation, not consent"
+    },
+    {
+      "id": "consent.chain-intact",
+      "name": "The consent event chain verifies",
+      "status": "pass",
+      "detail": "epoch=1, granted=[acquire_signal, process_locally]",
+      "because": "an event log that does not verify cannot support a claim about what was consented to"
+    },
+    {
+      "id": "consent.handling-declared",
+      "name": "Data handling is declared by the host, not asserted by a library",
+      "status": "pass",
+      "detail": "the host supplied a declaration and it is recorded",
+      "because": "a library stating what its host does with a signal is asserting something it cannot observe, and one added cloud path makes it false"
+    }
+  ],
+  "ok": true
+}
