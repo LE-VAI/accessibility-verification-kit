@@ -4,7 +4,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-reduced-motion: reduce)" srcset="docs/media/hero-poster.png">
-    <img src="docs/media/hero-loop.webp" width="800" alt="A terminal panel shows an example run of the verification kit against a placeholder site. It prints the kit version and target, a WCAG 2.2 AA result of 0 violations at 1280 px and at 320 px, and a design-contract score. Yellow underlines draw beneath each denominator: 26 and 25 applicable rules, and 31 of 40 checks scored. Last, the misfire-rate slot prints null in yellow and its reason types out: a URL has no input method of its own.">
+    <img src="docs/media/hero-loop.webp" width="800" alt="A terminal panel shows an example run of the verification kit against a placeholder site. It prints the kit version and target, a WCAG 2.2 AA result of 0 violations at 1280 px and at 320 px, and a design-contract score. White underlines draw beneath each denominator: 26 and 25 applicable rules, and 31 of 40 checks scored. Last, the misfire-rate slot prints null in yellow and its reason types out: a URL has no input method of its own.">
   </picture>
 </p>
 <p align="center"><sub>A 5-second loop. It plays once and rests, and shows a still frame if you prefer reduced motion. <a href="https://le-vai.github.io/LE-VAI/loops/#accessibility-verification-kit">Watch it on repeat</a>.</sub></p>
